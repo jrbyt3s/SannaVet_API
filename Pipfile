@@ -13,6 +13,7 @@ djangorestframework-simplejwt = "*"
 pillow = "*"
 boto3 = "*"
 requests = "*"
+gunicorn = "*"
 
 [dev-packages]
 
