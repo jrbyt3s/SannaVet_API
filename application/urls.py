@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('application.openapi')),
@@ -24,6 +26,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('auth/', include('authentication.urls')),
     path('alive', include('alive.urls'))
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns +=staticfiles_urlpatterns()
