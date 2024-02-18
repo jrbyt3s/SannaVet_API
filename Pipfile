@@ -12,6 +12,7 @@ drf-yasg = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
 boto3 = "*"
+requests = "*"
 
 [dev-packages]
 
