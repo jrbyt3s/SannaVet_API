@@ -14,6 +14,7 @@ pillow = "*"
 boto3 = "*"
 requests = "*"
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 
