@@ -10,6 +10,8 @@ psycopg2-binary = "*"
 djangorestframework = "*"
 drf-yasg = "*"
 djangorestframework-simplejwt = "*"
+pillow = "*"
+boto3 = "*"
 
 [dev-packages]
 

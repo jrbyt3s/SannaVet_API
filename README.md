@@ -1,15 +1,17 @@
-# DRF Boilerplate
+# SANNAVET
 
-## Instalación
 
-1. install your enviroment: pipvenv install
-2. activate your enviroment: pipev shell.
+
+## Instalación y Activación d eentorno virtual:
+
+1. install your enviroment: pipenv install
+2. activate your enviroment: pipenv shell.
 
 ```sh
 pipenv install Django
 ```
 
-## Iniciar Django
+## Apuntes Django
 
 - Crear un proyecto
 
@@ -61,7 +63,7 @@ DEBUG=True
 
 DEBUG=True
 
-DB_NAME='drf_sanavet'
+DB_NAME='drf_sannavet'
 DB_USER='xxxxx'
 DB_PASSWORD=''
 DB_HOST='127.0.0.1'
