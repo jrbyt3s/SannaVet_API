@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'users',
     'authentication',
-    'alive'
+    'alive',
+    'pets',
 ]
 
 MIDDLEWARE = [
