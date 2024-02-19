@@ -16,6 +16,7 @@ class PetView(generics.GenericAPIView):
     serializer_class = PetSerializer
     http_method_names = ['get', 'post']
     queryset = PetModel.objects
+    permission_classes = [permissions.IsAuthenticated]
     parser_classes = [parsers.MultiPartParser]
 
     @swagger_auto_schema(
@@ -57,11 +58,11 @@ class PetView(generics.GenericAPIView):
     
     @swagger_auto_schema(
         operation_summary='Endpoint para crear una mascota en el sistema',
-        operation_description='En este servicio crea una mascota',
+        operation_description='En este servicio crea una mascota, pero el usuario debe estar logueado',
         request_body=PetCreateSerializer
     )
     def post(selft, request):
-        serializer = PetCreateSerializer(data=request.data)
+        serializer = PetCreateSerializer( request.user,data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)

@@ -10,7 +10,11 @@ IMAGE_EXTENSION = '.png'
 class PetSerializer(serializers.ModelSerializer):
     class Meta:
         model = PetModel
-        fields = '__all__'
+        fields = [
+            "id","nombre","sexo","especie","raza",
+            "color","fotoUrl","esterilizado","peso","user_id"
+            ]
+        
 
 class PetCreateSerializer(serializers.Serializer):
     nombre =serializers.CharField(max_length=50);
@@ -21,16 +25,19 @@ class PetCreateSerializer(serializers.Serializer):
     fotoUrl = serializers.ImageField(write_only=True)
     esterilizado = serializers.BooleanField(default=False)
     peso = serializers.DecimalField(default=0.0, max_digits=3, decimal_places=1)
+    
 
-    def create(self, validated_data):
+    def update(self, instance, validated_data):
         bucket = Bucket('drfecommercee', 'pets')
 
+        user_id= instance.id
+        validated_data['user_id'] = user_id
         image = validated_data['fotoUrl']
         name = validated_data['nombre']
         url = bucket.upload_object(
             f'{slugify(name)}{IMAGE_EXTENSION}', image.file
         )
-        validated_data['fotoUrl'] = url
+        validated_data['fotoUrl']  = url
         record = PetModel(**validated_data)
         record.save()
         return record

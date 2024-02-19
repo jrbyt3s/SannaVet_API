@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'authentication',
     'alive',
     'pets',
+    'clients',
 ]
 
 MIDDLEWARE = [

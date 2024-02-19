@@ -27,6 +27,7 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('alive/', include('alive.urls')),
     path('pets/', include('pets.urls')),
+    path('clients/', include('clients.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns +=staticfiles_urlpatterns()
