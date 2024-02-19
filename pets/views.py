@@ -5,7 +5,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, parsers, permissions
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .serializers import PetCreateSerializer, PetSerializer
+from .serializers import PetCreateSerializer, PetSerializer, PetUpdateSerializer, PetDeleteSerializer
 from .models import PetModel
 from .schemas import PetSchema
 
@@ -70,6 +70,7 @@ class PetGetByIDView(generics.GenericAPIView):
     serializer_class = PetSerializer
     http_method_names = ['get', 'patch', 'delete']
     queryset = PetModel.objects
+    parser_classes = [parsers.MultiPartParser]
     #permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
@@ -85,14 +86,21 @@ class PetGetByIDView(generics.GenericAPIView):
     @swagger_auto_schema(
         operation_summary='Endpoint para actualizar una mascota por el ID',
         operation_description='En este servicio se actualizara una mascota',
-        #request_body=PetUpdateSerializer
+        request_body=PetUpdateSerializer
     )
     def patch(self, request, id):
-        pass
+        record = get_object_or_404(self.queryset, pk=id, is_delete=False)
+        serializer = PetUpdateSerializer(record, data = request.data)        
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @swagger_auto_schema(
         operation_summary='Endpoint para inactivar una mascota por el ID',
         operation_description='En este servicio se inactivara una mascota'
     )
     def delete(self, _, id):
-        pass
+        serializer = PetDeleteSerializer(data={'id':id})
+        serializer.is_valid(raise_exception=True)
+        serializer.deactivate()
+        return Response(status=status.HTTP_204_NO_CONTENT)
