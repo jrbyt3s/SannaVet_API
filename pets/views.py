@@ -66,3 +66,30 @@ class PetView(generics.GenericAPIView):
         serializer.save()
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
+class PetGetByIDView(generics.GenericAPIView):
+    serializer_class = PetSerializer
+    http_method_names = ['get', 'patch', 'delete']
+    queryset = PetModel.objects
+    #permission_classes = [permissions.IsAuthenticated]
+
+    @swagger_auto_schema(
+        operation_summary='Endpoint para obtener una mascota por el ID',
+        operation_description='En este servicio se obtendra una mascota'
+    )
+    def get(self, _, id):
+        pass    
+
+    @swagger_auto_schema(
+        operation_summary='Endpoint para actualizar una mascota por el ID',
+        operation_description='En este servicio se actualizara una mascota',
+        #request_body=PetUpdateSerializer
+    )
+    def patch(self, request, id):
+        pass
+
+    @swagger_auto_schema(
+        operation_summary='Endpoint para inactivar una mascota por el ID',
+        operation_description='En este servicio se inactivara una mascota'
+    )
+    def delete(self, _, id):
+        pass
