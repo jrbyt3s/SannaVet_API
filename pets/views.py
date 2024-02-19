@@ -77,7 +77,10 @@ class PetGetByIDView(generics.GenericAPIView):
         operation_description='En este servicio se obtendra una mascota'
     )
     def get(self, _, id):
-        pass    
+        record = get_object_or_404( self.queryset, pk=id, is_delete=False)   
+        serilizer = self.serializer_class(record, many=False)
+        return Response(serilizer.data, status=status   .HTTP_200_OK)
+
 
     @swagger_auto_schema(
         operation_summary='Endpoint para actualizar una mascota por el ID',
