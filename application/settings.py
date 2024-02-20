@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'alive',
     'pets',
     'clients',
+    'appoiments',
 ]
 
 MIDDLEWARE = [
