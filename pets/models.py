@@ -4,7 +4,7 @@ from users.models import UserModel
 # Create your models here.
 
 class PetModel(models.Model):
-    user = models.ForeignKey(UserModel, on_delete=models.CASCADE )
+    user = models.ForeignKey(UserModel, related_name='pets', on_delete=models.CASCADE )
     nombre = models.CharField(max_length=50);
     sexo = models.CharField(max_length=1); #M / H
     especie = models.CharField(max_length=50);
