@@ -28,7 +28,7 @@ class AppoimentView(generics.GenericAPIView):
         nro_page = query_params.get('page')
         if nro_page is None: nro_page = 1
         per_page = query_params.get('per_page')
-        if per_page is None: per_page = 10
+        if per_page is None: per_page = 20
         query = query_params.get('q', '')
 
 
