@@ -1,6 +1,8 @@
+# urls.py
 from django.urls import path
-from .views import AttetionView
+from .views import AttentionView
 
 urlpatterns = [
-    path('', AttetionView.as_view(), name='list_create'),
+    path('', AttentionView.as_view(), name='list_create'),
+    
 ]

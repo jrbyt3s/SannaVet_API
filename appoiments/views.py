@@ -67,7 +67,7 @@ class AppoimentView(generics.GenericAPIView):
         serializer = AppoimentCreateSerializer(data= request.data) 
         # print(serializer.__dict__)
    
-        print(request.data)       
+        #print(request.data)       
         serializer.is_valid(raise_exception=True)
         
         serializer.save()

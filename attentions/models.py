@@ -10,3 +10,6 @@ class AttentionModel(models.Model):
     imageUrl = models.URLField()
     dateOfAttention = models.DateTimeField(default=datetime.now)
     is_delete = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'attentions'

@@ -5,14 +5,14 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, parsers, permissions
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .serializers import AttentionSerializer
+from .serializers import AttentionSerializer, AttentionCreateSerializer
 from .models import AttentionModel
 from .schemas import AttentionSchema
 
 
 schema_request = AttentionSchema()
 
-class AttetionView(generics.GenericAPIView):
+class AttentionView(generics.GenericAPIView):
     serializer_class = AttentionSerializer
     http_method_names = ['get', 'post']
     queryset = AttentionModel.objects
@@ -61,3 +61,15 @@ class AttetionView(generics.GenericAPIView):
                 'currentPage': page.number
             }
         }, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema(
+            operation_summary='Endpoint para crear Atenciones clinicas',
+            operation_description='en este enpoint se registran las atenciones clínicas de las mascotas, se necesita el Pet_id',
+            request_body=AttentionCreateSerializer
+    )
+    def post(self, request):
+        serializer = AttentionCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(data= serializer.data, status=status.HTTP_201_CREATED)
