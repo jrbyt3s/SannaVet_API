@@ -73,3 +73,19 @@ class AttentionView(generics.GenericAPIView):
         serializer.save()
 
         return Response(data= serializer.data, status=status.HTTP_201_CREATED)
+
+class AttentionByIDView(generics.GenericAPIView):
+    serializer_class = AttentionSerializer
+    http_method_names = ['get', 'patch', 'delete']
+    queryset = AttentionModel.objects
+    parser_classes = [parsers.MultiPartParser]
+    #permission_classes = [permissions.IsAuthenticated]
+
+    @swagger_auto_schema(
+        operation_summary='Endpoint para obtener una atención de la mascota por el ID',
+        operation_description='En este servicio la atención de una mascota'
+    )
+    def get(self, _, id):
+        record = get_object_or_404(self.queryset, pk=id, is_delete=False)
+        serializer = self.serializer_class(record, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
