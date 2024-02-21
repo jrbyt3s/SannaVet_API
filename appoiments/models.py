@@ -4,7 +4,7 @@ from pets.models import PetModel
 from datetime import datetime
 
 class AppoimentModel(models.Model):
-    pet = models.ForeignKey(PetModel, on_delete=models.CASCADE)
+    pet = models.ForeignKey(PetModel, related_name='appoiments', on_delete=models.CASCADE)
     veterinarian = models.ForeignKey(UserModel,on_delete = models.CASCADE, null=True)
     date = models.DateField()
     hour = models.TimeField()

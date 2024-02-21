@@ -3,17 +3,24 @@ from .models import PetModel
 from application.utils.bucket import Bucket
 from django.utils.text import slugify
 from django.shortcuts import get_object_or_404
+from appoiments.serializers import AppoimentSerializer
 
 
 IMAGE_EXTENSION = '.png'
 
-class PetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PetModel
-        fields = [
-            "id","nombre","sexo","especie","raza",
-            "color","fotoUrl","esterilizado","peso","user_id"
-            ]
+class PetSerializer(serializers.Serializer):
+    
+    id = serializers.IntegerField()
+    nombre =serializers.CharField();
+    sexo = serializers.CharField(default='m', max_length=1); #M / H
+    especie = serializers.CharField();
+    raza = serializers.CharField(default='mixta')
+    color = serializers.CharField();
+    fotoUrl = serializers.URLField()
+    esterilizado = serializers.BooleanField(default=False)
+    peso = serializers.DecimalField(default=0.0, max_digits=3, decimal_places=1)
+    appoiments = AppoimentSerializer(many=True)
+    
         
 
 class PetCreateSerializer(serializers.Serializer):
