@@ -5,7 +5,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, parsers, permissions
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .serializers import AppoimentSerializer, AppoimentCreateSerializer
+from .serializers import AppoimentSerializer, AppoimentCreateSerializer, AppoimentUpdateSerializer, AppoimentDeleteSerializer
 from .models import AppoimentModel
 from .schemas import Appoimentchema
 
@@ -73,6 +73,36 @@ class AppoimentView(generics.GenericAPIView):
         serializer.save()
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
     
+class AppoimentGetByIdView(generics.GenericAPIView):
+    serializer_class = AppoimentSerializer
+    http_method_names = ['get', 'patch', 'delete']
+    queryset = AppoimentModel.objects
+    #permission_classes = [permissions.IsAuthenticated]
+
+    @swagger_auto_schema(
+        operation_summary='Endpoint para obtener una cita por el ID',
+        operation_description='En este servicio se obtendra una cita, pero necesitas el id de la cita'
+    )
+    def get(self, _, id):
+        record = get_object_or_404(self.queryset, pk=id, is_delete=False)
+        serializer = self.serializer_class(record, many=False)
+        print(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
+    def patch(self, request, id):
+        record = get_object_or_404(self.queryset, pk=id, is_delete=False)
+        serializer = AppoimentUpdateSerializer(record, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
+    @swagger_auto_schema(
+        operation_summary='Endpoint para inactivar una cita por el ID',
+        operation_description='En este servicio se inactiva una cita por el id'
+    )
+    def delete(self, _, id):
+        serializer = AppoimentDeleteSerializer(data={'id':id})
+        serializer.is_valid(raise_exception=True)
+        serializer.deactivate()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     

@@ -23,7 +23,6 @@ class ClienteDataView(APIView):
     )
     def get(self, request):
         records = self.queryset.all().prefetch_related('pets')
-        print(records.query)
         serilizer = self.serializer_class(records, many=True)
                
         if not records:
