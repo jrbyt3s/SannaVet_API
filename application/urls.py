@@ -29,6 +29,7 @@ urlpatterns = [
     path('pets/', include('pets.urls')),
     path('clients/', include('clients.urls')),
     path('appoiments/', include('appoiments.urls')),
+    path('attentions/',include('attentions.urls'))
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns +=staticfiles_urlpatterns()
