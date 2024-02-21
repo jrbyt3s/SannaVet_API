@@ -7,7 +7,7 @@ class AttentionModel(models.Model):
     diagnosis = models.TextField()
     treatment = models.TextField()
     procedure = models.TextField()
-    imageUrl = models.URLField()
+    imageUrl = models.URLField(null=True)
     dateOfAttention = models.DateTimeField(default=datetime.now)
     is_delete = models.BooleanField(default=False)
 

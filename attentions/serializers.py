@@ -3,7 +3,7 @@ from django.shortcuts import get_list_or_404
 from .models import AttentionModel
 from datetime import datetime
 
-class AttentionSerializer(serializers.Serializer):
+class AttentionSerializer(serializers.ModelSerializer):
     class Meta:
         model =AttentionModel
         fields = [
