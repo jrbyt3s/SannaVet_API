@@ -5,7 +5,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, parsers, permissions
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .serializers import AttentionSerializer, AttentionCreateSerializer
+from .serializers import AttencionDeleteSerializer, AttentionSerializer, AttentionCreateSerializer, AttentionUpdateSerializer
 from .models import AttentionModel
 from .schemas import AttentionSchema
 
@@ -16,7 +16,7 @@ class AttentionView(generics.GenericAPIView):
     serializer_class = AttentionSerializer
     http_method_names = ['get', 'post']
     queryset = AttentionModel.objects
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
         operation_summary='Endpoint para listar las atenciones de la mascota',
@@ -68,6 +68,7 @@ class AttentionView(generics.GenericAPIView):
             request_body=AttentionCreateSerializer
     )
     def post(self, request):
+        
         serializer = AttentionCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -79,7 +80,7 @@ class AttentionByIDView(generics.GenericAPIView):
     http_method_names = ['get', 'patch', 'delete']
     queryset = AttentionModel.objects
     parser_classes = [parsers.MultiPartParser]
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
         operation_summary='Endpoint para obtener una atención de la mascota por el ID',
@@ -89,3 +90,21 @@ class AttentionByIDView(generics.GenericAPIView):
         record = get_object_or_404(self.queryset, pk=id, is_delete=False)
         serializer = self.serializer_class(record, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema(
+        operation_summary='Endpoint para actualizar una atención por el ID',
+        operation_description='En este servicio actualizará una atención clinica de la mascota',
+        request_body=AttentionUpdateSerializer
+    )
+    def patch(self, request, id):
+        record = get_object_or_404(self.queryset, pk=id, is_delete=False)
+        serializer = AttentionUpdateSerializer(record, data = request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self, _, id):
+        serializer = AttencionDeleteSerializer(data={'id':id})
+        serializer.is_valid(raise_exception=True)
+        serializer.deactivate()
+        return Response(status=status.HTTP_204_NO_CONTENT)

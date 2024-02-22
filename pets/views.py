@@ -62,6 +62,7 @@ class PetView(generics.GenericAPIView):
         request_body=PetCreateSerializer
     )
     def post(selft, request):
+        #print(request.__dict__)
         serializer = PetCreateSerializer( request.user,data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

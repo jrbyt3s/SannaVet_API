@@ -38,9 +38,11 @@ class PetCreateSerializer(serializers.Serializer):
         bucket = Bucket('drfecommercee', 'pets')
 
         user_id= instance.id
+        username = instance.username
         validated_data['user_id'] = user_id
         image = validated_data['fotoUrl']
         name = validated_data['nombre']
+        name = f'{username}-{name}'
         url = bucket.upload_object(
             f'{slugify(name)}{IMAGE_EXTENSION}', image.file
         )
