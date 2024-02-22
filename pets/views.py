@@ -36,7 +36,7 @@ class PetView(generics.GenericAPIView):
         # Filtros por defecto
         filters = {'is_delete': False}
 
-        records = self.queryset.all().prefetch_related('appoiments').filter(**filters).filter(
+        records = self.queryset.all().prefetch_related('appoiments').prefetch_related('attentions').filter(**filters).filter(
             Q(nombre__icontains=query) 
         ).order_by('-id')
 

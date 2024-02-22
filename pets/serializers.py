@@ -4,6 +4,7 @@ from application.utils.bucket import Bucket
 from django.utils.text import slugify
 from django.shortcuts import get_object_or_404
 from appoiments.serializers import AppoimentSerializer
+from attentions.serializers import AttentionSerializer
 
 
 IMAGE_EXTENSION = '.png'
@@ -20,6 +21,7 @@ class PetSerializer(serializers.Serializer):
     esterilizado = serializers.BooleanField(default=False)
     peso = serializers.DecimalField(default=0.0, max_digits=3, decimal_places=1)
     appoiments = AppoimentSerializer(many=True)
+    attentions = AttentionSerializer(many=True)
     
         
 

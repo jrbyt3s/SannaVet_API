@@ -3,7 +3,7 @@ from pets.models import PetModel
 from datetime import datetime
 
 class AttentionModel(models.Model):
-    pet = models.ForeignKey(PetModel, on_delete=models.CASCADE)
+    pet = models.ForeignKey(PetModel,related_name='attentions', on_delete=models.CASCADE)
     diagnosis = models.TextField()
     treatment = models.TextField()
     procedure = models.TextField()
