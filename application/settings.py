@@ -69,6 +69,15 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True #linea agregada
 
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
 ROOT_URLCONF = 'application.urls'
 
 TEMPLATES = [
