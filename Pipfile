@@ -15,6 +15,7 @@ boto3 = "*"
 requests = "*"
 gunicorn = "*"
 whitenoise = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
