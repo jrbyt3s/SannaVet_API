@@ -21,6 +21,7 @@ class LoginSerializer(serializers.Serializer):
         jwt = RefreshToken.for_user(user)
 
         return {
+            'usersignin':{ 'id': str(user.id), 'first_name':str(user.first_name)},
             'access_token': str(jwt.access_token),
             'refresh_token': str(jwt)
         }
