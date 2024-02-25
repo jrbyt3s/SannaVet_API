@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import UserModel
 from secrets import token_hex
 from application.utils.mailing import Mailing
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 class LoginSerializer(serializers.Serializer):
@@ -19,9 +20,17 @@ class LoginSerializer(serializers.Serializer):
 
         user = authenticate(username=username, password=password)
         jwt = RefreshToken.for_user(user)
-
-        return {
-            'usersignin':{ 'id': str(user.id), 'first_name':str(user.first_name)},
+        
+        token_data = {
+            'username': user.username,
+            'email': user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "role": user.role
+        }
+        jwt.payload.update(token_data)
+    
+        return {            
             'access_token': str(jwt.access_token),
             'refresh_token': str(jwt)
         }
